@@ -5,6 +5,7 @@
 
 bin/
 #.vscode/
+*.exe
 
 # User-specific files
 *.rsuser
