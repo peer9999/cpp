@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "pascal": "php",
+        "ostream": "cpp"
+    }
+}
