@@ -5,25 +5,13 @@ using namespace std;
 int main()
 {
 	int i;
-	for(i = 0; i < 5; i++){
-		cout << " " << 1 ;
-		for(i = 0; i < 4; i++){
-			cout << " " << 1  ;
-			for(i = 0; i < 3; i++){
-				cout << " " << 1 ;
-				for(i = 0; i < 2; i++){
-					cout << " " << 1 ;
-					for(i = 0; i < 1; i++){
-						cout << " " << 1 ;
-						cout<<endl;
-					}
-				 cout<<endl;
-				}
-				cout<<endl;
-			}
-			cout<<endl;
+	int n = 5;
+	while (1) {
+		for (i = 0; i < n; i++) {
+			cout << " " << 1 ;
 		}
-		cout<<endl;
+		cout << endl;
+		if (--n == 0) break;
 	}
 	system("pause");
 	return 0;
