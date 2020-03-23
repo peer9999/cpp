@@ -6,13 +6,13 @@
 
 using namespace std;
 
-int Menu(struct Football *P,int index)
+int Menu(struct Football *P,int &len)
 {
     int k;
 
     cout << endl;
 #ifdef _WIN32
-//    system("cls");
+    system("cls");
     cout << "Главное меню" << endl;
     cout << "1. Ввод данных" << endl;
     cout << "2. Вывод данных" << endl;
@@ -20,7 +20,7 @@ int Menu(struct Football *P,int index)
     cout << "0. Выход из программы" << endl << endl;
     cout << "Выберите действие:";
 #else
-//    system("clear");
+    system("clear");
     cout << "Р“Р»Р°РІРЅРѕРµ РјРµРЅСЋ" << endl;
     cout << "1. Р’РІРѕРґ РґР°РЅРЅС‹С…" << endl;
     cout << "2. Р’С‹РІРѕРґ РґР°РЅРЅС‹С…" << endl;
@@ -33,12 +33,13 @@ int Menu(struct Football *P,int index)
 
     switch (k) {
         case 1:
-            Input(P,index);
+            Input(P,len);
             break;
         case 2:
-            Output(P,index);
+            Output(P,len,true);
             break;
         case 3:
+            Delete(P,len);
             break;
         case 0:
             return 0;

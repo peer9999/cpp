@@ -28,5 +28,7 @@ struct Football {
     int fouls;
 };
 
-void Input(struct Football *,int);
-void Output(struct Football *,int);
+void Input(struct Football *,int &);
+void Output(struct Football *,int &,bool);
+void Delete(struct Football *,int &);
+void pause();

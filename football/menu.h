@@ -5,4 +5,4 @@ enum Menu {
     EXIT = 0
 };
 
-int Menu(struct Football *,int);
+int Menu(struct Football *,int &);
