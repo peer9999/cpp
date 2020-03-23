@@ -31,4 +31,3 @@ struct Football {
 void Input(struct Football *,int &);
 void Output(struct Football *,int &,bool);
 void Delete(struct Football *,int &);
-void pause();

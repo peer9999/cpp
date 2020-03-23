@@ -2,6 +2,7 @@
 #include <string>
 
 #include "struct.h"
+#include "function.h"
 
 using namespace std;
 
@@ -66,20 +67,41 @@ void Delete(struct Football *P,int &len)
 {
     int k;
 
+    if (len == 0) {
+#ifdef _WIN32
+        system("cls");
+        cout << "Äàííûå îòñóòñòâóþò. Èñïîëüçóéòå ñíà÷àëà ââîä äàííûõ." << endl;
+#else
+        system("clear");
+        cout << "Ð”Ð°Ð½Ð½Ñ‹Ðµ Ð¾Ñ‚ÑÑƒÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‚. Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ ÑÐ½Ð°Ñ‡Ð°Ð»Ð° Ð²Ð²Ð¾Ð´ Ð´Ð°Ð½Ð½Ñ‹Ñ…." << endl;
+#endif
+        pause();
+        return;
+    }
+
     Output(P,len,false);
 
-    cout << endl;
+    do {
+        cout << endl;
 #ifdef _WIN32
-//    system("cls");
-    cout << "Óäàëåíèå äàííûõ" << endl;
-    cout << "Âûáåðèòå íîìåð èãðîêà äëÿ óäàëåíèÿ:";
+        cout << "Óäàëåíèå äàííûõ" << endl;
+        cout << "Âûáåðèòå íîìåð èãðîêà äëÿ óäàëåíèÿ:";
 #else
-//    system("clear");
-    cout << "Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ…" << endl;
-    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ð¸Ð³Ñ€Ð¾ÐºÐ° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ:";
+        cout << "Ð£Ð´Ð°Ð»ÐµÐ½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ…" << endl;
+        cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ð¸Ð³Ñ€Ð¾ÐºÐ° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ:";
 #endif
-    cin >> k;
-    cin.get();
+        cin >> k;
+        cin.get();
+
+        if (k < 1 || k > len) {
+#ifdef _WIN32
+            cout << "Èãðîêà ñ òàêèì íîìåðîì íå ñóùåñòâóåò. Ïîïðîáóéòå åùå ðàç." << endl;
+#else
+            cout << "Ð˜Ð³Ñ€Ð¾ÐºÐ° Ñ Ñ‚Ð°ÐºÐ¸Ð¼ Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð¼ Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·." << endl;
+#endif
+            pause();
+        }
+    } while (k < 1 || k > len);
 
     for (int i = k - 1; i < len - 1; i++) {
         P[i] = P[i + 1];
@@ -87,10 +109,4 @@ void Delete(struct Football *P,int &len)
     len--;
 
     pause();
-}
-
-void pause()
-{
-    cout << endl << "Press any key to continue...";
-    cin.ignore();
 }
