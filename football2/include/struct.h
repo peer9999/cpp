@@ -9,8 +9,8 @@ struct PlayerName {
 };
 
 struct Football {
-//    enum PlayerCountry country;
-//    enum PlayerClub club;
+    string country;
+    string club;
     struct PlayerName name;
     int goals;
     int fouls;

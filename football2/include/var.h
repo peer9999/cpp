@@ -1,15 +1,25 @@
-int len = 0;
-int const index = 10;
-Football P[index] = {};
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 string PlayerCountry[] = {
-    "Italy",
-    "Spain",
-    "England"
+    "Италия",
+    "Испания",
+    "Англия"
 };
 
 string PlayerClub[] = {
-    "Manchester_city",
-    "Barcelona",
-    "Real_Madrid"
+    "Ювентус",
+    "Барселона",
+    "Реал",
+    "Манчестер Сити"
 };
+
+/*
+string PlayerClub[][] = {
+    {"Ювентус"},
+    {"Барселона","Реал"},
+    {"Манчестер Сити"}
+};
+*/

@@ -1,6 +1,8 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 
+#include "include/var.h"
 #include "include/struct.h"
 #include "include/function.h"
 
@@ -16,17 +18,19 @@ void Output(Football *P,int &len)
 #endif
     }
 
+    cout.fill('_');
     for (int i = 0; i < len; i++) {
         if (!i) {
             cout << "ИГРОКИ" << endl;
+            cout << setw(5) << " " << setw(20) << "Страна" << "Клуб" << "Имя" << "Фамилия" << endl;
         }
-        cout << i + 1 << ". " << P[i].name.firstname << " " << P[i].name.lastname << endl;
+        cout << setw(5) << i + 1 << setw(20) << P[i].country << P[i].club << P[i].name.firstname << P[i].name.lastname << endl;
     }
 }
 
 void Input(Football *P,int &len)
 {
-    int k,l;
+    int k,l,country,club;
 
     cout << endl;
 #ifdef _WIN32
@@ -38,6 +42,33 @@ void Input(Football *P,int &len)
     cin.get();
 
     for (int i = len, l = k + len; i < l; i++) {
+
+#ifdef _WIN32
+        cout << "���: ";
+#else
+        cout << "Страна ( ";
+        for (int j = 0; j < 3; j++) {
+            cout << j + 1 << "-" << PlayerCountry[j] << " ";
+        }
+        cout << "): ";
+#endif
+        cin >> country;
+        cin.get();
+        P[i].country = PlayerCountry[country - 1];
+
+#ifdef _WIN32
+        cout << "���: ";
+#else
+        cout << "Клуб (  ";
+        for (int j = 0; j < 4; j++) {
+            cout << j + 1 << "-" << PlayerClub[j] << " ";
+        }
+        cout << "): ";
+#endif
+        cin >> club;
+        cin.get();
+        P[i].club = PlayerClub[club - 1];
+
 #ifdef _WIN32
         cout << "���: ";
 #else

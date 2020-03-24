@@ -3,9 +3,12 @@
 
 #include "include/struct.h"
 #include "include/menu.h"
-#include "include/var.h"
 
 using namespace std;
+
+int len = 0;
+int const index = 10;
+Football P[index] = {};
 
 int main()
 {
