@@ -26,7 +26,7 @@ int MenuSelect()
 #ifdef _WIN32
     cout << endl << "�������� ��������:";
 #else
-    cout << endl << endl << endl << "Выберите действие:";
+    cout << endl << endl << endl << "Выберите действие: ";
 #endif
     cin >> k;
     cin.get();

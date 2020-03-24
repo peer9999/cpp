@@ -14,6 +14,8 @@ int main()
 {
     int f;
 
+    setlocale(LC_ALL,"");
+
     do {
         MenuView();
         Output(P,len);

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <cwchar>
 
 #include "include/var.h"
 #include "include/struct.h"
@@ -10,6 +11,11 @@ using namespace std;
 
 void Output(Football *P,int &len)
 {
+    setlocale(LC_ALL,"");
+
+    wchar_t s[100];
+    wchar_t f[] = L"* %3d *%15s *%15s *%15s *%15s *";
+
     if (len == 0) {
 #ifdef _WIN32
         cout << "Äàííûå îòñóòñòâóþò. Èñïîëüçóéòå ñíà÷àëà ââîä äàííûõ." << endl;
@@ -18,13 +24,22 @@ void Output(Football *P,int &len)
 #endif
     }
 
-    cout.fill('_');
+    cout.fill(' ');
     for (int i = 0; i < len; i++) {
         if (!i) {
             cout << "Ð˜Ð“Ð ÐžÐšÐ˜" << endl;
-            cout << setw(5) << " " << setw(20) << "Ð¡Ñ‚Ñ€Ð°Ð½Ð°" << "ÐšÐ»ÑƒÐ±" << "Ð˜Ð¼Ñ" << "Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ" << endl;
+            cout << "*******************************************************************************" << endl;
+            cout << "*" << "     " << "*" << "      Ð¡Ñ‚Ñ€Ð°Ð½Ð°     " << "*" << "       ÐšÐ»ÑƒÐ±      " << "*" << "       Ð˜Ð¼Ñ       " << "*" << "     Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ     " << "*" << endl;
+            cout << "*******************************************************************************" << endl;
         }
-        cout << setw(5) << i + 1 << setw(20) << P[i].country << P[i].club << P[i].name.firstname << P[i].name.lastname << endl;
+//        cout << "*" << setw(4) << i + 1 << " *" << setw(20) << P[i].country << " *" << setw(20) << P[i].club << " *" << setw(20) << P[i].name.firstname << " *" << setw(20) << P[i].name.lastname << " *" << endl;
+        wprintf(L"* %3d *%15s *%15s *%15s *%15s *",i + 1,P[i].country,P[i].club,P[i].name.firstname,P[i].name.lastname);
+//        wprintf(f,i + 1,P[i].country,P[i].club,P[i].name.firstname,P[i].name.lastname);
+//        swprintf(s,100,f,i + 1,P[i].country,P[i].club,P[i].name.firstname,P[i].name.lastname);
+//        cout << s << endl;
+        if (i == len - 1) {
+            cout << "*******************************************************************************" << endl;
+        }
     }
 }
 
@@ -36,7 +51,7 @@ void Input(Football *P,int &len)
 #ifdef _WIN32
     cout << "Âûáåðèòå êîëè÷åñòâî èãðîêîâ äëÿ ââîäà:";
 #else
-    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð² Ð´Ð»Ñ Ð²Ð²Ð¾Ð´Ð°:";
+    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð² Ð´Ð»Ñ Ð²Ð²Ð¾Ð´Ð°: ";
 #endif
     cin >> k;
     cin.get();
@@ -59,7 +74,7 @@ void Input(Football *P,int &len)
 #ifdef _WIN32
         cout << "Èìÿ: ";
 #else
-        cout << "ÐšÐ»ÑƒÐ± (  ";
+        cout << "ÐšÐ»ÑƒÐ± ( ";
         for (int j = 0; j < 4; j++) {
             cout << j + 1 << "-" << PlayerClub[j] << " ";
         }
@@ -104,7 +119,7 @@ void Delete(Football *P,int &len)
 #ifdef _WIN32
     cout << "Âûáåðèòå íîìåð èãðîêà äëÿ óäàëåíèÿ:";
 #else
-    cout << endl << endl << endl << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¸Ð³Ñ€Ð¾ÐºÐ° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ:";
+    cout << endl << endl << endl << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¸Ð³Ñ€Ð¾ÐºÐ° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ: ";
 #endif
     cin >> k;
     cin.get();
