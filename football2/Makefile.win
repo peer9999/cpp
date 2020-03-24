@@ -1,0 +1,16 @@
+# Specify compiler
+CC=cl.exe
+ 
+# Specify linker
+LINK=link.exe
+
+all: app
+
+# Link the object files and dependent libraries into a binary
+app : main.o struct.o menu.o
+    $(LINK) /OUT:1.exe main.o struct.o menu.o
+ 
+# Compile the source files into object files
+main.o : main.cpp struct.cpp menu.cpp
+    $(CC) /c main.cpp /c struct.cpp /c menu.cpp /Fomain.o /Fostruct.o /Fomenu.o
+
