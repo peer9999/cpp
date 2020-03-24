@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 
-#include "struct.h"
-#include "function.h"
+#include "include/struct.h"
+#include "include/function.h"
 
 using namespace std;
 

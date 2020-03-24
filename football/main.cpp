@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 
-#include "struct.h"
-#include "menu.h"
+#include "include/struct.h"
+#include "include/menu.h"
 
 using namespace std;
 
