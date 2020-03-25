@@ -12,31 +12,27 @@ Football P[index] = {};
 
 int main()
 {
-    int f;
-
-    setlocale(LC_ALL,"");
-
+    int selection;
     do {
         MenuView();
         Output(P,len);
-        switch (f) {
-            case 1:
+        switch (selection) {
+            case INPUT:
                 Input(P,len);
-                f = 1000;
+                selection = 1001;
                 break;
-            case 2:
+            case SORT:
                 Sort(P,len);
-                f = 1000;
+                selection = 1002;
                 break;
-            case 3:
+            case DELETE:
                 Delete(P,len);
-                f = 1000;
+                selection = 1003;
                 break;
             default:
-                f = MenuSelect();
+                selection = MenuSelect();
                 break;
         }
-    } while (f > 0);
-
+    } while (selection > 0);
     return 0;
 }
