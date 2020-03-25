@@ -86,13 +86,13 @@ void Input(Football *P,int &len)
 #else
         cout << "    ÐšÐ»ÑƒÐ± ( ";
 #endif
-        for (int j = 0; j < 4; j++) {
-            cout << j + 1 << "-" << PlayerClub[j] << " ";
+        for (int j = 0; j < 2; j++) {
+            cout << j + 1 << "-" << PlayerClub[country - 1][j] << " ";
         }
         cout << "): ";
         cin >> club;
         cin.get();
-        P[i].club = PlayerClub[club - 1];
+        P[i].club = PlayerClub[country - 1][club - 1];
 
 #ifdef _WIN32
         cout << "    Èìÿ: ";
