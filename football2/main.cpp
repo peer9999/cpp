@@ -29,6 +29,18 @@ int main()
                 Delete(P,len);
                 selection = 1003;
                 break;
+            case FIND:
+                Find(P,len);
+                selection = 1004;
+                break;
+            case READ:
+                Read(P,len);
+                selection = 1005;
+                break;
+            case WRITE:
+                Write(P,len);
+                selection = 1006;
+                break;
             default:
                 selection = MenuSelect();
                 break;

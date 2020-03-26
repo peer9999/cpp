@@ -27,3 +27,6 @@ void Sort(Football *,int &);
 void Delete(Football *,int &);
 void SortGoals(Football *,int &,int);
 void SortFouls(Football *,int &,int);
+void Read(Football *,int &);
+void Write(Football *,int &);
+void Find(Football *,int &);

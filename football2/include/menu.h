@@ -1,7 +1,10 @@
 enum Menu {
     INPUT = 1,
     SORT,
-    DELETE
+    DELETE,
+    FIND,
+    READ,
+    WRITE
 };
 
 void MenuView();

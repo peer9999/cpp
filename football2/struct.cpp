@@ -2,8 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <clocale>
-#include <cstdlib>
-#include <stdexcept>
+#include <fstream>
 
 #include "include/var.h"
 #include "include/struct.h"
@@ -240,4 +239,107 @@ void SortFouls(Football *P,int &len,int direct)
             }
         }
     }
+}
+
+void Read(Football *P,int &len)
+{
+    string line;
+    string delimiter = ";";
+    string token;
+    size_t pos = 0;
+    int l;
+    ifstream file;
+
+#ifdef _WIN32
+    file.open("Out_win.txt");
+#else
+    file.open("Out.txt");
+#endif
+
+    if (file.is_open()) {
+        while (getline(file,line)) {
+            l = 0;
+            while ((pos = line.find(delimiter)) != string::npos) {
+                token = line.substr(0,pos);
+                switch (l) {
+                    case 0:
+                        P[len].country = token;
+                        break;
+                    case 1:
+                        P[len].club = token;
+                        break;
+                    case 2:
+                        P[len].name.firstname = token;
+                        break;
+                    case 3:
+                        P[len].name.lastname = token;
+                        break;
+                    case 4:
+                        P[len].goals = stoi(token);
+                        break;
+                    case 5:
+                        P[len].fouls = stoi(token);
+                        break;
+                }
+                line.erase(0,pos + delimiter.length());
+                l++;
+            }
+            len++;
+        }
+    }
+    file.close();
+
+    pause();
+}
+
+void Write(Football *P,int &len)
+{
+    ofstream file;
+
+    if (len == 0) {
+        return;
+    }
+
+#ifdef _WIN32
+    file.open("Out_win.txt");
+#else
+    file.open("Out.txt");
+#endif
+
+    for (int i = 0; i < len; i++) {
+        file << P[i].country << ";" << P[i].club << ";" << P[i].name.firstname << ";" << P[i].name.lastname << ";" << P[i].goals << ";" << P[i].fouls << ";" << endl;
+    }
+    file.close();
+
+    pause();
+}
+
+void Find(Football *P,int &len)
+{
+    int goals,fouls,index = 0;
+
+    if (len == 0) {
+        return;
+    }
+
+    goals = P[0].goals;
+    fouls = P[0].fouls;
+    for (int i = 1; i < len; i++) {
+        if (goals < P[i].goals) {
+            index = i;
+            goals = P[i].goals;
+            fouls = P[i].fouls;
+        }
+    }
+
+    cout << endl;
+#ifdef _WIN32
+    cout << "Ñàìûé ïîëåçíûé èãðîê: " << endl;
+    cout << "    " << P[index].name.firstname << " " << P[index].name.lastname << " èãðàåò çà " << P[index].club << " " << P[index].country << " çàáèë " << P[index].goals << " ãîëîâ" << endl;
+#else
+    cout << "Ð¡Ð°Ð¼Ñ‹Ð¹ Ð¿Ð¾Ð»ÐµÐ·Ð½Ñ‹Ð¹ Ð¸Ð³Ñ€Ð¾Ðº: " << endl;
+    cout << "    " << P[index].name.firstname << " " << P[index].name.lastname << " Ð¸Ð³Ñ€Ð°ÐµÑ‚ Ð·Ð° " << P[index].club << " " << P[index].country << " Ð·Ð°Ð±Ð¸Ð» " << P[index].goals << " Ð³Ð¾Ð»Ð¾Ð²" << endl;
+#endif
+
+    pause();
 }
