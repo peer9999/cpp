@@ -54,7 +54,7 @@ void Output(Football *P,int &len)
 
 void Input(Football *P,int &len)
 {
-    int k,l,country,club;
+    int k,l,country,club,goals,fouls;
 
     cout << endl;
 #ifdef _WIN32
@@ -112,16 +112,18 @@ void Input(Football *P,int &len)
 #else
         cout << "    Ð“Ð¾Ð»Ñ‹: ";
 #endif
-        cin >> P[i].goals;
+        cin >> goals;
         cin.get();
+        P[i].goals = goals;
 
 #ifdef _WIN32
         cout << "    Íàðóøåíèÿ: ";
 #else
         cout << "    ÐÐ°Ñ€ÑƒÑˆÐµÐ½Ð¸Ñ: ";
 #endif
-        cin >> P[i].fouls;
+        cin >> fouls;
         cin.get();
+        P[i].fouls = fouls;
 
         len++;
     }

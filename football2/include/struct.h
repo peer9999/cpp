@@ -4,21 +4,35 @@
 using namespace std;
 
 struct PlayerName {
-    string firstname;
-    string lastname;
+    string firstname;  // имя
+    string lastname;   // фамилия
 };
 
-struct Football {
-    string country;
-    string club;
-    struct PlayerName name;
-    int goals;
-    int fouls;
+union Misc {
+    int number;     // номер на майке
+    char note[16];  // примечание
+};
+
+enum Position {
+    GOALKEEPER,
+    DEFENDER,
+    MIDFIELDER,
+    ATTACKER
 };
 
 enum Fields {
     GOALS = 1,
     FOULS
+};
+
+struct Football {
+    string country;          // страна
+    string club;             // клуб
+    struct PlayerName name;  // фио
+    unsigned goals : 5;      // голы
+    unsigned fouls : 5;      // нарушения
+    enum Position position;  // амплуа
+    union Misc misc;         // разное
 };
 
 void Output(Football *,int &);
