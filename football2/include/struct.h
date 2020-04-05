@@ -9,12 +9,12 @@ struct PlayerName {
 };
 
 union Misc {
-    int number;     // номер на майке
     char note[16];  // примечание
+    int number;     // номер на майке
 };
 
 enum Position {
-    GOALKEEPER,
+    GOALKEEPER = 1,
     DEFENDER,
     MIDFIELDER,
     ATTACKER
@@ -25,6 +25,11 @@ enum Fields {
     FOULS
 };
 
+enum Type {
+    TYPE_CHAR = 1,
+    TYPE_INT
+};
+
 struct Football {
     string country;          // страна
     string club;             // клуб
@@ -33,6 +38,7 @@ struct Football {
     unsigned fouls : 5;      // нарушения
     enum Position position;  // амплуа
     union Misc misc;         // разное
+    enum Type tag;           // тип данных в поле разное
 };
 
 void Output(Football *,int &);
@@ -44,3 +50,4 @@ void SortFouls(Football *,int &,int);
 void Read(Football *,int &);
 void Write(Football *,int &);
 void Find(Football *,int &);
+void Filter(Football *,int &);

@@ -3,6 +3,9 @@
 #include <string>
 #include <clocale>
 #include <fstream>
+#include <cctype>
+#include <cstdlib>
+#include <cstring>
 
 #include "include/var.h"
 #include "include/struct.h"
@@ -13,6 +16,7 @@ using namespace std;
 void Output(Football *P,int &len)
 {
     setlocale(LC_ALL,"ru_RU.utf8");
+    string note;
 
     if (len == 0) {
 #ifdef _WIN32
@@ -23,17 +27,15 @@ void Output(Football *P,int &len)
         return;
     }
 
-    for (int i = 0; i < len; i++) {
-        if (!i) {
 #ifdef _WIN32
-            cout << "    ������" << endl;
+    cout << "    ������" << endl;
 #else
-            cout << "    ИГРОКИ" << endl;
+    cout << "    ИГРОКИ" << endl;
 #endif
-            cout << setfill('-') << setw(102) << "-" << endl;
-            cout << "|" << "     " << "|" << "      Страна      " << "|" << "       Клуб       " << "|" << "       Имя        " << "|" << "     Фамилия      " << "|" << " Голы " << "|" << " Нарушения " << "|" << endl;
-            cout << setfill('-') << setw(102) << "-" << endl;
-        }
+    cout << setfill('-') << setw(140) << "-" << endl;
+    cout << "|" << "     " << "|" << "      Страна      " << "|" << "       Клуб       " << "|" << "       Имя        " << "|" << "     Фамилия      " << "|" << "      Амплуа      " << "|" << " Голы " << "|" << " Нарушения " << "|" << "    Примечания    " << "|" << endl;
+    cout << setfill('-') << setw(140) << "-" << endl;
+    for (int i = 0; i < len; i++) {
         cout << "|" << setfill(' ') << setw(4) << i + 1 << " |";
         print_space(strlen_mb(P[i].country));
         cout << P[i].country << " |";
@@ -41,20 +43,28 @@ void Output(Football *P,int &len)
         cout << P[i].club << " |";
         print_space(strlen_mb(P[i].name.firstname));
         cout << P[i].name.firstname << " |";
-        print_space(strlen_mb(P[i].name.lastname ));
+        print_space(strlen_mb(P[i].name.lastname));
         cout << P[i].name.lastname << " |";
+        print_space(strlen_mb(PlayerPosition[P[i].position - 1]));
+        cout << PlayerPosition[P[i].position - 1] << " |";
         cout << setfill(' ') << setw(5) << P[i].goals << " |";
         cout << setfill(' ') << setw(10) << P[i].fouls << " |";
-        cout << endl;
-        if (i == len - 1) {
-            cout << setfill('-') << setw(102) << "-" << endl;
+        if (P[i].tag == TYPE_INT) {
+            cout << setfill(' ') << setw(17) << P[i].misc.number << " |";
+        } else {
+            note = P[i].misc.note;
+            print_space(strlen_mb(note));
+            cout << P[i].misc.note << " |";
         }
+        cout << endl;
     }
+    cout << setfill('-') << setw(140) << "-" << endl;
 }
 
 void Input(Football *P,int &len)
 {
-    int k,l,country,club,goals,fouls;
+    int k,l,country,club,position,goals,fouls;
+    char misc[16];
 
     cout << endl;
 #ifdef _WIN32
@@ -107,6 +117,33 @@ void Input(Football *P,int &len)
 #endif
         getline(cin,P[i].name.lastname);
 
+
+#ifdef _WIN32
+        cout << "    ������ ( ";
+#else
+        cout << "    Амплуа ( ";
+#endif
+        for (int i = 0; i < 4; i++) {
+            cout << i + 1 << "-" << PlayerPosition[i] << " ";
+        }
+        cout << "): ";
+        cin >> position;
+        cin.get();
+        switch (position) {
+            case GOALKEEPER:
+                P[i].position = GOALKEEPER;
+                break;
+            case DEFENDER:
+                P[i].position = DEFENDER;
+                break;
+            case MIDFIELDER:
+                P[i].position = MIDFIELDER;
+                break;
+            case ATTACKER:
+                P[i].position = ATTACKER;
+                break;
+        }
+
 #ifdef _WIN32
         cout << "    ����: ";
 #else
@@ -124,6 +161,21 @@ void Input(Football *P,int &len)
         cin >> fouls;
         cin.get();
         P[i].fouls = fouls;
+
+#ifdef _WIN32
+        cout << "    �������������� ����������: ";
+#else
+        cout << "    Дополнительная информация: ";
+#endif
+        cin >> misc;
+        cin.get();
+        if (isdigit(misc[0])) {
+            P[i].misc.number = atoi(misc);
+            P[i].tag = TYPE_INT;
+        } else {
+            strcpy(P[i].misc.note,misc);
+            P[i].tag = TYPE_CHAR;
+        }
 
         len++;
     }
@@ -277,10 +329,35 @@ void Read(Football *P,int &len)
                         P[len].name.lastname = token;
                         break;
                     case 4:
-                        P[len].goals = stoi(token);
+                        switch (stoi(token)) {
+                            case GOALKEEPER:
+                                P[len].position = GOALKEEPER;
+                                break;
+                            case DEFENDER:
+                                P[len].position = DEFENDER;
+                                break;
+                            case MIDFIELDER:
+                                P[len].position = MIDFIELDER;
+                                break;
+                            case ATTACKER:
+                                P[len].position = ATTACKER;
+                                break;
+                        }
                         break;
                     case 5:
+                        P[len].goals = stoi(token);
+                        break;
+                    case 6:
                         P[len].fouls = stoi(token);
+                        break;
+                    case 7:
+                        if (isdigit(token[0])) {
+                            P[len].misc.number = stoi(token);
+                            P[len].tag = TYPE_INT;
+                        } else {
+                            strcpy(P[len].misc.note,token.c_str());
+                            P[len].tag = TYPE_CHAR;
+                        }
                         break;
                 }
                 line.erase(0,pos + delimiter.length());
