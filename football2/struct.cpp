@@ -303,6 +303,17 @@ void Read(Football *P,int &len)
     size_t pos = 0;
     int l;
     ifstream file;
+    Football X;
+
+    ifstream file_bin("Out.bin",ios::binary);
+    while (file_bin.read((char*) P,sizeof(X))) {
+        cout << P->country << endl;
+    }
+    file_bin.close();
+
+//    P = &X;
+//    len = 4;
+//    return;
 
 #ifdef _WIN32
     file.open("Out_win.txt");
@@ -374,6 +385,7 @@ void Read(Football *P,int &len)
 void Write(Football *P,int &len)
 {
     ofstream file;
+    Football X;
 
     if (len == 0) {
         return;
@@ -386,9 +398,19 @@ void Write(Football *P,int &len)
 #endif
 
     for (int i = 0; i < len; i++) {
-        file << P[i].country << ";" << P[i].club << ";" << P[i].name.firstname << ";" << P[i].name.lastname << ";" << P[i].goals << ";" << P[i].fouls << ";" << endl;
+        file << P[i].country << ";" << P[i].club << ";" << P[i].name.firstname << ";" << P[i].name.lastname << ";" << P[i].position << ";" << P[i].goals << ";" << P[i].fouls << ";";
+        if (P[i].tag == TYPE_INT) {
+            file << P[i].misc.number << ";";
+        } else {
+            file << P[i].misc.note << ";";
+        }
+        file << endl;
     }
     file.close();
+
+    ofstream file_bin("Out.bin",ios::binary);
+    file_bin.write((char*) P,sizeof(X) * len);
+    file_bin.close();
 
     pause();
 }
