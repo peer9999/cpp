@@ -16,7 +16,7 @@ using namespace std;
 void Output(Football *P,int &len)
 {
     setlocale(LC_ALL,"ru_RU.utf8");
-    string note;
+    string temp;
 
     if (len == 0) {
 #ifdef _WIN32
@@ -37,13 +37,17 @@ void Output(Football *P,int &len)
     cout << setfill('-') << setw(140) << "-" << endl;
     for (int i = 0; i < len; i++) {
         cout << "|" << setfill(' ') << setw(4) << i + 1 << " |";
-        print_space(strlen_mb(P[i].country));
+        temp = P[i].country;
+        print_space(strlen_mb(temp));
         cout << P[i].country << " |";
-        print_space(strlen_mb(P[i].club));
+        temp = P[i].club;
+        print_space(strlen_mb(temp));
         cout << P[i].club << " |";
-        print_space(strlen_mb(P[i].name.firstname));
+        temp = P[i].name.firstname;
+        print_space(strlen_mb(temp));
         cout << P[i].name.firstname << " |";
-        print_space(strlen_mb(P[i].name.lastname));
+        temp = P[i].name.lastname;
+        print_space(strlen_mb(temp));
         cout << P[i].name.lastname << " |";
         print_space(strlen_mb(PlayerPosition[P[i].position - 1]));
         cout << PlayerPosition[P[i].position - 1] << " |";
@@ -52,8 +56,8 @@ void Output(Football *P,int &len)
         if (P[i].tag == TYPE_INT) {
             cout << setfill(' ') << setw(17) << P[i].misc.number << " |";
         } else {
-            note = P[i].misc.note;
-            print_space(strlen_mb(note));
+            temp = P[i].misc.note;
+            print_space(strlen_mb(temp));
             cout << P[i].misc.note << " |";
         }
         cout << endl;
@@ -64,7 +68,7 @@ void Output(Football *P,int &len)
 void Input(Football *P,int &len)
 {
     int k,l,country,club,position,goals,fouls;
-    char misc[16];
+    char misc[16],temp[30];
 
     cout << endl;
 #ifdef _WIN32
@@ -88,7 +92,7 @@ void Input(Football *P,int &len)
         cout << "): ";
         cin >> country;
         cin.get();
-        P[i].country = PlayerCountry[country - 1];
+        strcpy(P[i].country,PlayerCountry[country - 1].c_str());
 
 #ifdef _WIN32
         cout << "    Êëóá ( ";
@@ -101,21 +105,25 @@ void Input(Football *P,int &len)
         cout << "): ";
         cin >> club;
         cin.get();
-        P[i].club = PlayerClub[country - 1][club - 1];
+        strcpy(P[i].club,PlayerClub[country - 1][club - 1].c_str());
 
 #ifdef _WIN32
         cout << "    Èìÿ: ";
 #else
         cout << "    Ð˜Ð¼Ñ: ";
 #endif
-        getline(cin,P[i].name.firstname);
+        cin >> temp;
+        cin.get();
+        strcpy(P[i].name.firstname,temp);
 
 #ifdef _WIN32
         cout << "    Ôàìèëèÿ: ";
 #else
         cout << "    Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ: ";
 #endif
-        getline(cin,P[i].name.lastname);
+        cin >> temp;
+        cin.get();
+        strcpy(P[i].name.lastname,temp);
 
 
 #ifdef _WIN32
@@ -317,16 +325,16 @@ void Read(Football *P,int &len)
                 token = line.substr(0,pos);
                 switch (l) {
                     case 0:
-                        P[len].country = token;
+                        strcpy(P[len].country,token.c_str());
                         break;
                     case 1:
-                        P[len].club = token;
+                        strcpy(P[len].club,token.c_str());
                         break;
                     case 2:
-                        P[len].name.firstname = token;
+                        strcpy(P[len].name.firstname,token.c_str());
                         break;
                     case 3:
-                        P[len].name.lastname = token;
+                        strcpy(P[len].name.lastname,token.c_str());
                         break;
                     case 4:
                         switch (stoi(token)) {
@@ -371,6 +379,22 @@ void Read(Football *P,int &len)
     pause();
 }
 
+void Read_binary(Football *P,int &len)
+{
+    ifstream file;
+
+    file.open("Out.bin",ios::binary);
+    file.read((char*)&len,sizeof(len));
+
+    Football X[len];
+
+    file.seekg(4,ios::beg);
+    file.read((char*)P,sizeof(X));
+    file.close();
+
+    pause();
+}
+
 void Write(Football *P,int &len)
 {
     ofstream file;
@@ -396,7 +420,25 @@ void Write(Football *P,int &len)
     }
     file.close();
 
+    Write_binary(P,len);
+
     pause();
+}
+
+void Write_binary(Football *P,int &len)
+{
+    ofstream file;
+
+    if (len == 0) {
+        return;
+    }
+
+    Football X[len];
+
+    file.open("Out.bin",ios::binary);
+    file.write((char*)&len,sizeof(len));
+    file.write((char*)P,sizeof(X));
+    file.close();
 }
 
 void Find(Football *P,int &len)
