@@ -10,7 +10,7 @@ int main()
 {
     int len = 0;
     int selection;
-    int const index = 10;
+    int const index = 100;
     Football P[index] = {};
 
     do {

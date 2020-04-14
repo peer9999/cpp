@@ -4,17 +4,14 @@
 #include <cstdlib>
 #include <stdexcept>
 
+#include "include/function_var.h"
 #include "include/function.h"
 
 using namespace std;
 
 void pause()
 {
-#ifdef _WIN32
-    cout << endl << "Äëÿ ïðîäîëæåíèÿ íàæìèòå ëþáóþ êëàâèøó ...";
-#else
-    cout << endl << "Ð”Ð»Ñ Ð¿Ñ€Ð¾Ð´Ð¾Ð»Ð¶ÐµÐ½Ð¸Ñ Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ Ð»ÑŽÐ±ÑƒÑŽ ÐºÐ»Ð°Ð²Ð¸ÑˆÑƒ ...";
-#endif
+    cout << endl << Pause;
     cin.ignore();
 }
 

@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "include/var.h"
+#include "include/struct_var.h"
 #include "include/struct.h"
 #include "include/function.h"
 
@@ -19,21 +19,16 @@ void Output(Football *P,int &len)
     string temp;
 
     if (len == 0) {
-#ifdef _WIN32
-        cout << "Äàííûå îá èãðîêàõ îòñóòñòâóþò. Èñïîëüçóéòå ïóíêò \"Ââîä\"." << endl;
-#else
-        cout << "Ð”Ð°Ð½Ð½Ñ‹Ðµ Ð¾Ð± Ð¸Ð³Ñ€Ð¾ÐºÐ°Ñ… Ð¾Ñ‚ÑÑƒÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‚. Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ Ð¿ÑƒÐ½ÐºÑ‚ \"Ð’Ð²Ð¾Ð´\"." << endl;
-#endif
+        cout << EmptyTable << endl;
         return;
     }
 
-#ifdef _WIN32
-    cout << "    ÈÃÐÎÊÈ" << endl;
-#else
-    cout << "    Ð˜Ð“Ð ÐžÐšÐ˜" << endl;
-#endif
+    cout << TitleTable << endl;
     cout << setfill('-') << setw(140) << "-" << endl;
-    cout << "|" << "     " << "|" << "      Ð¡Ñ‚Ñ€Ð°Ð½Ð°      " << "|" << "       ÐšÐ»ÑƒÐ±       " << "|" << "       Ð˜Ð¼Ñ        " << "|" << "     Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ      " << "|" << "      ÐÐ¼Ð¿Ð»ÑƒÐ°      " << "|" << " Ð“Ð¾Ð»Ñ‹ " << "|" << " ÐÐ°Ñ€ÑƒÑˆÐµÐ½Ð¸Ñ " << "|" << "    ÐŸÑ€Ð¸Ð¼ÐµÑ‡Ð°Ð½Ð¸Ñ    " << "|" << endl;
+    for (int i = 0; i < ColumnTableCount; i++) {
+        cout << ColumnTable[i];
+    }
+    cout << endl;
     cout << setfill('-') << setw(140) << "-" << endl;
     for (int i = 0; i < len; i++) {
         cout << "|" << setfill(' ') << setw(4) << i + 1 << " |";
@@ -70,71 +65,46 @@ void Input(Football *P,int &len)
     int k,l,country,club,position,goals,fouls;
     char misc[16],temp[30];
 
-    cout << endl;
-#ifdef _WIN32
-    cout << "Âûáåðèòå êîëè÷åñòâî èãðîêîâ äëÿ ââîäà:";
-#else
-    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð² Ð´Ð»Ñ Ð²Ð²Ð¾Ð´Ð°: ";
-#endif
+    cout << endl << AddPlayer;
     cin >> k;
     cin.get();
 
     cout << endl;
     for (int i = len, l = k + len; i < l; i++) {
-#ifdef _WIN32
-        cout << "    Ñòðàíà ( ";
-#else
-        cout << "    Ð¡Ñ‚Ñ€Ð°Ð½Ð° ( ";
-#endif
+        cout << Country;
         for (int j = 0; j < 3; j++) {
             cout << j + 1 << "-" << PlayerCountry[j] << " ";
         }
-        cout << "): ";
+        cout << RightBracket;
         cin >> country;
         cin.get();
         strcpy(P[i].country,PlayerCountry[country - 1].c_str());
 
-#ifdef _WIN32
-        cout << "    Êëóá ( ";
-#else
-        cout << "    ÐšÐ»ÑƒÐ± ( ";
-#endif
+        cout << Club;
         for (int j = 0; j < 2; j++) {
             cout << j + 1 << "-" << PlayerClub[country - 1][j] << " ";
         }
-        cout << "): ";
+        cout << RightBracket;
         cin >> club;
         cin.get();
         strcpy(P[i].club,PlayerClub[country - 1][club - 1].c_str());
 
-#ifdef _WIN32
-        cout << "    Èìÿ: ";
-#else
-        cout << "    Ð˜Ð¼Ñ: ";
-#endif
+        cout << Firstname;
         cin >> temp;
         cin.get();
         strcpy(P[i].name.firstname,temp);
 
-#ifdef _WIN32
-        cout << "    Ôàìèëèÿ: ";
-#else
-        cout << "    Ð¤Ð°Ð¼Ð¸Ð»Ð¸Ñ: ";
-#endif
+        cout << Lastname;
         cin >> temp;
         cin.get();
         strcpy(P[i].name.lastname,temp);
 
 
-#ifdef _WIN32
-        cout << "    Àìïëóà ( ";
-#else
-        cout << "    ÐÐ¼Ð¿Ð»ÑƒÐ° ( ";
-#endif
+        cout << Position;
         for (int i = 0; i < 4; i++) {
             cout << i + 1 << "-" << PlayerPosition[i] << " ";
         }
-        cout << "): ";
+        cout << RightBracket;
         cin >> position;
         cin.get();
         switch (position) {
@@ -152,29 +122,17 @@ void Input(Football *P,int &len)
                 break;
         }
 
-#ifdef _WIN32
-        cout << "    Ãîëû: ";
-#else
-        cout << "    Ð“Ð¾Ð»Ñ‹: ";
-#endif
+        cout << Goals;
         cin >> goals;
         cin.get();
         P[i].goals = goals;
 
-#ifdef _WIN32
-        cout << "    Íàðóøåíèÿ: ";
-#else
-        cout << "    ÐÐ°Ñ€ÑƒÑˆÐµÐ½Ð¸Ñ: ";
-#endif
+        cout << Fouls;
         cin >> fouls;
         cin.get();
         P[i].fouls = fouls;
 
-#ifdef _WIN32
-        cout << "    Äîïîëíèòåëüíàÿ èíôîðìàöèÿ: ";
-#else
-        cout << "    Ð”Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð°Ñ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ñ: ";
-#endif
+        cout << Misc;
         cin >> misc;
         cin.get();
         if (isdigit(misc[0])) {
@@ -198,20 +156,11 @@ void Sort(Football *P,int &len)
         return;
     }
 
-    cout << endl;
-#ifdef _WIN32
-    cout << "Âûáåðèòå ïîëå äëÿ ñîðòèðîâêè ( 1-Ãîëû 2-Íàðóøåíèÿ ): ";
-#else
-    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ¸ ( 1-Ð“Ð¾Ð»Ñ‹ 2-ÐÐ°Ñ€ÑƒÑˆÐµÐ½Ð¸Ñ ): ";
-#endif
+    cout << endl << SortField;
     cin >> field;
     cin.get();
 
-#ifdef _WIN32
-    cout << "Âûáåðèòå íàïðàâëåíèå ñîðòèðîâêè ( 1-Ïî âîçðàñòàíèþ 2-Ïî óáûâàíèÿ ): ";
-#else
-    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ¸ ( 1-ÐŸÐ¾ Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚Ð°Ð½Ð¸ÑŽ 2-ÐŸÐ¾ ÑƒÐ±Ñ‹Ð²Ð°Ð½Ð¸Ñ ): ";
-#endif
+    cout << SortDirect;
     cin >> direct;
     cin.get();
 
@@ -234,21 +183,12 @@ void Delete(Football *P,int &len)
         return;
     }
 
-    cout << endl;
-#ifdef _WIN32
-    cout << "Âûáåðèòå èãðîêà äëÿ óäàëåíèÿ:";
-#else
-    cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð¸Ð³Ñ€Ð¾ÐºÐ° Ð´Ð»Ñ ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ: ";
-#endif
+    cout << endl << DeletePlayer;
     cin >> k;
     cin.get();
 
     if (k < 1 || k > len) {
-#ifdef _WIN32
-        cout << "Òàêîãî èãðîêà íå ñóùåñòâóåò. Ïîïðîáóéòå åùå ðàç." << endl;
-#else
-        cout << "Ð¢Ð°ÐºÐ¾Ð³Ð¾ Ð¸Ð³Ñ€Ð¾ÐºÐ° Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ ÐµÑ‰Ðµ Ñ€Ð°Ð·." << endl;
-#endif
+        cout << NotExist << endl;
         pause();
         return;
     }
@@ -312,12 +252,7 @@ void Read(Football *P,int &len)
     int l;
     ifstream file;
 
-#ifdef _WIN32
-    file.open("Out_win.txt");
-#else
-    file.open("Out.txt");
-#endif
-
+    file.open(OUT_FILE);
     if (file.is_open()) {
         while (getline(file,line)) {
             l = 0;
@@ -403,12 +338,7 @@ void Write(Football *P,int &len)
         return;
     }
 
-#ifdef _WIN32
-    file.open("Out_win.txt");
-#else
-    file.open("Out.txt");
-#endif
-
+    file.open(OUT_FILE);
     for (int i = 0; i < len; i++) {
         file << P[i].country << ";" << P[i].club << ";" << P[i].name.firstname << ";" << P[i].name.lastname << ";" << P[i].position << ";" << P[i].goals << ";" << P[i].fouls << ";";
         if (P[i].tag == TYPE_INT) {
@@ -419,8 +349,6 @@ void Write(Football *P,int &len)
         file << endl;
     }
     file.close();
-
-    Write_binary(P,len);
 
     pause();
 }
@@ -459,14 +387,6 @@ void Find(Football *P,int &len)
         }
     }
 
-    cout << endl;
-#ifdef _WIN32
-    cout << "Ñàìûé ïîëåçíûé èãðîê: " << endl;
-    cout << "    " << P[index].name.firstname << " " << P[index].name.lastname << " èãðàåò çà " << P[index].club << " " << P[index].country << " çàáèë " << P[index].goals << " ãîëîâ" << endl;
-#else
-    cout << "Ð¡Ð°Ð¼Ñ‹Ð¹ Ð¿Ð¾Ð»ÐµÐ·Ð½Ñ‹Ð¹ Ð¸Ð³Ñ€Ð¾Ðº: " << endl;
-    cout << "    " << P[index].name.firstname << " " << P[index].name.lastname << " Ð¸Ð³Ñ€Ð°ÐµÑ‚ Ð·Ð° " << P[index].club << " " << P[index].country << " Ð·Ð°Ð±Ð¸Ð» " << P[index].goals << " Ð³Ð¾Ð»Ð¾Ð²" << endl;
-#endif
-
+    cout << endl << GoodPlayer << endl << "    " << P[index].name.firstname << " " << P[index].name.lastname << PlaysFor << P[index].club << " " << P[index].country << Scored << P[index].goals << fGoals << endl;
     pause();
 }

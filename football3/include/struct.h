@@ -3,42 +3,32 @@
 
 using namespace std;
 
-#pragma pack (push,1)
 struct PlayerName {
     char firstname[30];  // имя
     char lastname[30];   // фамилия
 };
-#pragma pack (pop)
 
-#pragma pack (push,1)
 union Misc {
     char note[16];  // примечание
     int number;     // номер на майке
 };
-#pragma pack (pop)
 
-#pragma pack (push,1)
 enum Position {
     GOALKEEPER = 1,
     DEFENDER,
     MIDFIELDER,
     ATTACKER
 };
-#pragma pack (pop)
 
-#pragma pack (push,1)
 enum Fields {
     GOALS = 1,
     FOULS
 };
-#pragma pack (pop)
 
-#pragma pack (push,1)
 enum Type {
     TYPE_CHAR = 1,
     TYPE_INT
 };
-#pragma pack (pop)
 
 #pragma pack (push,1)
 struct Football {
