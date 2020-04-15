@@ -11,7 +11,8 @@ int main()
     int len = 0;
     int selection;
     int const index = 100;
-    Football P[index] = {};
+//    Football P[index] = {};
+    Football *P = new Football[index];
 
     do {
         MenuView();
