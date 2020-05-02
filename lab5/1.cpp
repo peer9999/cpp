@@ -1,59 +1,111 @@
-#include <iostream>
+#include <bits/stdc++.h> 
 
-using namespace std;
+using namespace std; 
 
-struct Node
-{
-   int x;
-   Node *l,*r;
+struct Node {
+    char letter;
+    float prob;
+    int freq;
 };
+Node *node;
+map<char,string> codes;
+map<char,int> freqs;
 
-void show(Node *&Tree,char w)
-{
-    if (Tree != NULL) {
-       show(Tree->l,'l');
-       cout << Tree->x << " " << w << endl;
-       show(Tree->r,'r');
-    }
-}
+static int compare(const void *elem1,const void *elem2) {
+    const Node a = *(Node*)elem1;
+    const Node b = *(Node*)elem2;
 
-void add_node(int x,Node *&MyTree)
-{
-    if (NULL == MyTree) {
-        MyTree    = new Node;
-        MyTree->x = x;
-        MyTree->l = MyTree->r = NULL;
-    } else if (x <= MyTree->x) {
-        if (MyTree->l != NULL) {
-            add_node(x,MyTree->l);
-        } else {
-            MyTree->l    = new Node;
-            MyTree->l->l = MyTree->l->r = NULL;
-            MyTree->l->x = x;
-        }
-    } else if (x > MyTree->x) {
-        if (MyTree->r != NULL) {
-            add_node(x,MyTree->r);
-        } else {
-            MyTree->r    = new Node;
-            MyTree->r->l = MyTree->r->r = NULL;
-            MyTree->r->x = x; 
-        }
-    }
-}
-
-int main()
-{
-    Node *Tree = NULL;
-    int s[12] = {1,2,3,8,4,5,6,2,7,8,9,0};
-
-    for (int i = 0; i < 12; i++) {
-//    for (int i = 5; i > 0; i--) {
-        add_node(s[i],Tree);
-    }
-
-    show(Tree,'g');
-    cin.get();
+    if (a.prob < b.prob) return 1;
+    else if (a.prob > b.prob) return -1;
     return 0;
 }
 
+void print(int size) {
+    cout << setw(10) << left << "Символ " << setw(10) << left << "Частота " << setw(10) << left << "Код" << endl;
+    for (int i = 0; i < size; i++) {
+        printf("%c\t%i\t%s\n",node[i].letter,node[i].freq,codes[node[i].letter].c_str());
+    }
+}
+
+float readfile() {
+    char ch;
+    char filename[128] = "input.txt";
+    FILE *file;
+    float total = 0;
+
+    file = fopen(filename,"r");
+    while (fscanf(file,"%c",&ch) != EOF) {
+        freqs[ch]++;
+        total++;
+    }
+    fclose(file);
+
+    return total;
+}
+
+void shannon(int li,int ri) {
+    int i,isp;
+    float prob;
+    float full;
+    float half;
+
+    if (li == ri) {
+        return;
+    } else if (ri - li == 1) {
+        // If interval consist of 2 elements then it's simple
+        codes[node[li].letter] += '0';
+        codes[node[ri].letter] += '1';
+    } else {
+        // Calculating sum of probabilities at specified interval
+        full = 0;
+        for (i = li; i <= ri; ++i) {
+            full += node[i].prob;
+        }
+        // Searching center
+        prob = 0;
+        isp  = -1; // index of split pos
+        half = full * 0.5f;
+        for (i = li; i <= ri; ++i) {
+            prob += node[i].prob;
+            if (prob <= half) {
+                codes[node[i].letter] += '0';
+            } else {
+                codes[node[i].letter] += '1';
+                if (isp < 0) isp = i;
+            }
+        }
+        if (isp < 0) isp = li + 1;
+
+        shannon(li,isp - 1);
+        shannon(isp,ri);
+    }
+}
+
+int encode(float total) {
+    int i = 0;
+    int size = (int)freqs.size();
+
+    node = new Node[size];
+    map<char,int>::iterator fi;
+    for (fi = freqs.begin(); fi != freqs.end(); ++fi, ++i) {
+        node[i].letter = (*fi).first;
+        node[i].prob   = float((*fi).second) / total;
+        node[i].freq   = (*fi).second;
+    }
+    qsort(node,size,sizeof(Node),compare);
+
+    return size;
+}
+
+int main() {
+    float total = readfile();
+    int size = encode(total);
+    shannon(0,size - 1);
+    print(size);
+
+    codes.clear();
+    freqs.clear();
+    delete[] node;
+
+    return 0;
+}
