@@ -24,7 +24,8 @@ enum TYPE {
 	TYPE_INT = 1,
 	TYPE_CHAR,
 	TYPE_FLOAT,
-	TYPE_XDIGIT
+	TYPE_XDIGIT,
+	TYPE_COMM
 };
 
 struct lex {
@@ -78,6 +79,10 @@ int main() {
 				info[i].tag = TYPE_INT;
 			}
 		}
+		if (misc[0] == '/' && misc[1] == '/') {
+			strcpy(info[i].misc.identificator, misc);
+			info[i].tag = TYPE_COMM;
+		}
 
 		if (info[i].tag == TYPE_CHAR) {
 			cout << setw(15) << left << info[i].misc.identificator << setw(15) << left << "\t" << "Identificator";
@@ -88,11 +93,15 @@ int main() {
 		else if (info[i].tag == TYPE_FLOAT) {
 			cout << setw(15) << left << info[i].misc.fnumber << setw(15) << left << "\t" << "Float number";
 		}
-		else {
+		else if (info[i].tag == TYPE_INT) {
 			cout << setw(15) << left << info[i].misc.inumber << setw(15) << left << "\t" << "Int number";
 		}
+		else {
+			cout << setw(15) << left << info[i].misc.identificator << setw(15) << left << "\t" << "Comment";
+		}
+
 		cout << endl;
-		//cout << info[i].tag << " " << endl;
+		cout << info[i].tag << " " << endl;
 		if (info[i].tag == 2) {
 			hashtab_add(hashtab, misc, i);
 		}
