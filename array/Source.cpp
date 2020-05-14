@@ -2,6 +2,7 @@
 #include <cstdlib>
 using namespace std;
 
+const int l = 2;
 const int k = 3;
 
 void fun1(int** arr,int x,int y);
@@ -75,7 +76,7 @@ void fun2(int* arr[]) {
     }
 }
 
-void fun3(int arr[3][3]) {
+void fun3(int arr[][3]) {
     int i, j;
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {

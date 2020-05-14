@@ -1,0 +1,1 @@
+func1(x,y,z);func_max(10,15);func_min(2.21,14);func2(12.31,count);func3(0xFF,0x100)
