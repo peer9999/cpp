@@ -1,0 +1,3 @@
+LG;Spain;1200;32;2;kredit;
+Sa;Brazil;4500;8;36217;kredit;
+Panasonic;Portugal;250;32;1;very old;
