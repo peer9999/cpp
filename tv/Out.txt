@@ -1,0 +1,7 @@
+Panasonic;Portugal;20;32;1;very;
+Horizont;Belarus;45;8;1;-100;
+Horizont;Belarus;45;8;1;-200;
+Horizont;Belarus;45;8;1;-300;
+Horizont;Belarus;45;8;1;-400;
+Horizont;Belarus;45;8;1;-500;
+Horizont;Belarus;45;8;1;-600;
