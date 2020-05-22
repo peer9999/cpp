@@ -63,9 +63,9 @@ void Edit		  (Mark_tv*);
 int main()
 {
 	setlocale(0, "");
-	Mark_tv* p = new Mark_tv[100];
+	Mark_tv* p = new Mark_tv();
 	int f, len = 0;
-	Read(p, len);
+//	Read(p, len);
 	do {
 		func();
 		OutputStruct(p, len);
@@ -170,7 +170,7 @@ void InputStruct(Mark_tv* p, int& len)
 			p[i].tag = TYPE_INT;
 		}
 		else {
-			strcpy(p[i].misc.note, misc);
+			strcpy_s(p[i].misc.note, misc);
 			p[i].tag = TYPE_CHAR;
 		}
 	}
@@ -240,7 +240,7 @@ void Edit(Mark_tv* p) {
 			p[i - 1].tag = TYPE_INT;
 		}
 		else {
-			strcpy(p[i - 1].misc.note, misc);
+			strcpy_s(p[i - 1].misc.note, misc);
 			p[i - 1].tag = TYPE_CHAR;
 		}
 	}
@@ -395,10 +395,10 @@ void Read(Mark_tv* p, int& len)
 			while (token != NULL) {
 				switch (l) {
 				case 0:
-					strcpy(p[len].title, token);
+					strcpy_s(p[len].title, token);
 					break;
 				case 1:
-					strcpy(p[len].country, token);
+					strcpy_s(p[len].country, token);
 					break;
 				case 2:
 					p[len].cost = atoi(token);
@@ -428,7 +428,7 @@ void Read(Mark_tv* p, int& len)
 						p[len].tag = TYPE_INT;
 					}
 					else {
-						strcpy(p[len].misc.note, token);
+						strcpy_s(p[len].misc.note, token);
 						p[len].tag = TYPE_CHAR;
 					}
 					break;
