@@ -83,6 +83,15 @@ void dijkstra(int graph[][SIZE]) {
                 minindex = i;
             }
         }
+
+cout << endl;
+for (int i = 0; i < SIZE; i++) {
+    cout << d[i] << " " << v[i] << endl;
+}
+cout << min << endl;
+cout << minindex << endl;
+getchar();
+
         // Добавляем найденный минимальный вес к текущему весу вершины
         // и сравниваем с текущим минимальным весом вершины
         if (minindex != INT_MAX) {
@@ -97,6 +106,13 @@ void dijkstra(int graph[][SIZE]) {
             }
             v[minindex] = 0;
         }
+
+cout << endl;
+for (int i = 0; i < SIZE; i++) {
+    cout << d[i] << " " << v[i] << endl;
+}
+getchar();
+
     } while (minindex < INT_MAX);
 
     minindex = 2;
@@ -114,6 +130,32 @@ void dijkstra(int graph[][SIZE]) {
     // Вывод кратчайшего пути (начальная вершина оказалась в конце массива из k элементов)
     cout << endl << "Вывод кратчайшего пути: " << endl;
     cout << 1 << "-" << minindex << " = " << min << endl;
+/*
+    // Восстановление пути
+    int ver[SIZE];       // массив посещенных вершин
+    int end = 4;         // индекс конечной вершины = 5 - 1
+    ver[0] = end + 1;    // начальный элемент - конечная вершина
+    int k = 1;           // индекс предыдущей вершины
+    int weight = d[end]; // вес конечной вершины
+
+    while (end != begin_index) { // пока не дошли до начальной вершины
+        for (int i = 0; i < SIZE; i++) { // просматриваем все вершины
+            if (graph[i][end] != 0) {  // если связь есть
+                int temp = weight - graph[i][end]; // определяем вес пути из предыдущей вершины
+                if (temp == d[i])  { // если вес совпал с рассчитанным значит из этой вершины и был переход
+                    weight = temp;   // сохраняем новый вес
+                    end    = i;      // сохраняем предыдущую вершину
+                    ver[k] = i + 1;  // и записываем ее в массив
+                    k++;
+                }
+            }
+        }
+    }
+
+    for (int i = k - 1; i >= 0; i--) {
+        cout << " " << ver[i];
+    }
+*/
     cout << endl;
 }
 
@@ -126,3 +168,6 @@ int main() {
 
     return 0;
 }
+
+
+

@@ -34,17 +34,15 @@ void add(Node** hashtab,const char* key,int data) {
     }
 }
 
-int search(Node** hashtab,const char* key) {
+Node* search(Node** hashtab,const char* key) {
     int ind = hashing(key);
-    int i = 0;
     Node* node;
     for (node = hashtab[ind]; node != nullptr; node = node->next) {
         if (strcmp(node->key,key) == 0) {
-            cout << "Node: " << node->key << ":" << node->data << endl;
-            i++;
+            return node;
         }
     }
-    return i;
+    return nullptr;
 }
 
 int main() {
@@ -54,7 +52,6 @@ int main() {
     add(hashtab,"b",456);
     add(hashtab,"c",789);
     add(hashtab,"d",0);
-    add(hashtab,"c",7089);
-    int i = search(hashtab,"c");
-    cout << "Count Node: " << i << endl;
+    Node* node = search(hashtab,"c");
+    cout << "Node: " << node->key << ":" << node->data << endl;
 }
